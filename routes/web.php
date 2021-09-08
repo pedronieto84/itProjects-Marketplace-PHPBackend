@@ -26,7 +26,7 @@ Route::get('/getUser',function(){
     ]);
 });
    
-Route::get('/createUser',function(){
+Route::post('/createUser',function(){
     return response()->json([
         'salute' => 'Hello World!',
     ]);
