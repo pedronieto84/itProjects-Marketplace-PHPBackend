@@ -19,3 +19,15 @@ Route::get('/', function () {
 });
 
 Route::get('/cursos/{num}', HomeController::class );
+
+Route::get('/getUser',function(){
+  return response()->json([
+        'salute' => 'Hello World!',
+    ]);
+});
+   
+Route::get('/createUser',function(){
+    return response()->json([
+        'salute' => 'Hello World!',
+    ]);
+});
