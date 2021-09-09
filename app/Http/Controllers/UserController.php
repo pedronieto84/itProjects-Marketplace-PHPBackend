@@ -14,12 +14,19 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function checkUser($userId){
-        $user = User::where('userId','=',$userId)->first();
-        if ($user) { 
-            return $user;
-        }
-        else{
-            return response()->json("User can not be find", 200);
+        
+        try{
+            $user = User::where('user_id','=',$userId)->first();
+            
+            if ($user) { 
+                return $user;
+            }
+            else{
+                return response()->json(["404"=>"Resource not found, Aquest usuari no existeix."]);
+            }
+        }catch(Throwable $e) {
+            //report($e);
+            return response()->json(["400"=>"Bad request, data no té format especificat."]);
         }
     }
 
@@ -28,11 +35,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         $users = User::all();
-        return response()->json($users, 200);
-
+        return response()->json(['users', compact('users')]);
     }
 
     /**
@@ -54,15 +59,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User();
+        try {
+            $user = new User();
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-
-        $user->save();
-
-        return response()->json("User created", 200);
+            $user->user_id = rand(0,20);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = $request->password;
+            $user->admin = false;
+            $user->projects_published = 0;
+            $user->save();
+            
+            return response()->json(['user', compact('user')]);
+        } catch (Throwable $e) {
+           // report($e);           
+           return response()->json(["400"=>"Bad request, data no té format especificat."]);
+        }  
     }
 
     /**
@@ -73,8 +85,7 @@ class UserController extends Controller
      */
     public function show($userId){
         $user = $this->checkUser($userId);
-
-        return response()->json($user, 200);
+        return response()->json(['user', compact('user')]);
 
     }
 
@@ -87,7 +98,7 @@ class UserController extends Controller
     public function edit($userId){
         $user = $this->checkUser($userId);
 
-        return response()->json($user, 200);
+        return response()->json(['user', compact('user')]);
 
     }
 
@@ -98,16 +109,24 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $userId)
-    {
-        $user = $this->checkUser($userId);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
+    public function update(Request $request, $userId){
+        try {
+            $user = $this->checkUser($userId);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = $request->password;
 
-        $user->save();
+            $user->save();
 
-        return response()->json("User modified", 200);
+            return response()->json(['user', compact('user')]);
+
+        } catch (Throwable $e) {
+           // report($e);
+    
+            return response()->json(["400"=>"Bad request, data no té format especificat."]);
+
+        } 
+        
     }
 
     /**
@@ -116,12 +135,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($userId)
-    {
-        $user = $this->checkUser($userId);
-        $user->delete();
+    public function destroy($userId){
+        try{
+            $user = $this->checkUser($userId);
+            $user->delete();
 
-        return response()->json("User deleted", 200);
+            return response()->json("User ".$userId." deleted.",200);
+
+        } catch (Throwable $e) {
+            //report($e);
+            return response()->json(["404"=>"Resource not found, Aquest usuari no existeix."]);
+        }
 
     }
 }

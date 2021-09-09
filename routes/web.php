@@ -22,5 +22,9 @@ Route::get('/', function () {
 
 Route::get('/cursos/{num}', HomeController::class );
 
+Route::get('/getUsers', [UserController::class,'index']);
 Route::get('/getUser/{userId}', [UserController::class,'show']);
 Route::post('/createUser', [UserController::class,'store']);
+Route::post('/deleteUser/{userId}', [UserController::class,'destroy']);
+Route::post('/updateUser/{userId}', [UserController::class,'update']);
+
