@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Prueba extends Migration
+class CreateFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class Prueba extends Migration
      */
     public function up()
     {
-        Schema::create('prueba', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 100);
+            $table->string('type_file', 80);
             $table->timestamps();
         });
     }
@@ -27,7 +27,6 @@ class Prueba extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prueba');
-        //
+        Schema::dropIfExists('files');
     }
 }
