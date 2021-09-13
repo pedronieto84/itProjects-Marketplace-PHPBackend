@@ -36,8 +36,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $users = User::all();
-        return response()->json(['users', compact('users')]);
+        $users = User::all()->toArray();
+
+        return response()->json(['users', $users]);
     }
 
     /**
@@ -69,7 +70,7 @@ class UserController extends Controller
             $user->admin = false;
             $user->projects_published = 0;
             $user->save();
-            
+
             return response()->json(['user', compact('user')]);
         } catch (Throwable $e) {
            // report($e);           
@@ -138,7 +139,7 @@ class UserController extends Controller
     public function destroy($userId){
         try{
             $user = $this->checkUser($userId);
-            $user->delete();
+            User::where('user_id', '=',$userId)->delete();
 
             return response()->json("User ".$userId." deleted.",200);
 
