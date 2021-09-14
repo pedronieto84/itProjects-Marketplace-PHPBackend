@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\UserProject;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Project;
+use App\Models\User;
 
 class UserProjectFactory extends Factory
 {
@@ -22,8 +24,8 @@ class UserProjectFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->name(20),
-            'project_id' => $this->faker->name(20),
+/*             'user_id'  =>  User::inRandomOrder()->value('user_id'),
+            'project_id'  =>  Project::inRandomOrder()->value('project_id'), */
         ];
     }
 }
