@@ -14,8 +14,8 @@ class CreateUserProjectsTable extends Migration
     public function up()
     {
         Schema::create('user_projects', function (Blueprint $table) {
-            $table->string('user_id', 20);
-            $table->string('project_id', 20);
+            $table->string('user_id');
+            $table->string('project_id');
             $table->foreign('user_id')->references('user_id')->on('users');
             $table->foreign('project_id')->references('project_id')->on('projects');
             $table->timestamps();

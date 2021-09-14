@@ -16,11 +16,12 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-      //$this->call(ProjectSeeder::class);
+     
       $this->call(FileSeeder::class);
       $this->call(TechsetSeeder::class);
-      //$this->call(UserSeeder::class);
-      //$this->call(UserProjectSeeder::class);
+      $this->call(UserSeeder::class);
+      $this->call(ProjectSeeder::class);
+      $this->call(UserProjectSeeder::class);
 
     }
 }

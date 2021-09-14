@@ -14,14 +14,14 @@ class CreateProjectsTable extends Migration
     public function up()
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->string('project_id', 20)->primary();
-            $table->string('owner_id', 20);
-            $table->string('title', 100);
-            $table->date('published_date');
-            $table->decimal('deadline');
-            $table->text('short_explanation');
-            $table->enum('state', ['accepted', 'published', 'refused', 'doing', 'finished']);
-            $table->decimal('bid');
+            $table->string('project_id')->primary();
+            $table->string('owner_id')->nullable();
+            $table->string('title')->nullable();
+            $table->date('published_date')->nullable();
+            $table->decimal('deadline')->nullable();
+            $table->text('short_explanation')->nullable();
+            $table->enum('state', ['accepted', 'published', 'refused', 'doing', 'finished'])->nullable();
+            $table->decimal('bid')->nullable();
             $table->timestamps();
            
         });
