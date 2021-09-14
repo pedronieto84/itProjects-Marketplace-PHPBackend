@@ -27,7 +27,7 @@ class ProjectFactory extends Factory
         'project_id' => $this->faker->name(),
         'owner_id' => $this->faker->name(),
         'title' => $this->faker->name(),
-        //'published_date '  => $this->faker->date() ,
+        'published_date' => $this->faker->date() ,
         'techset_id'  =>  Techset::inRandomOrder()->value('id'),
         'files_array_id'  =>  File::inRandomOrder()->value('id'),
         'deadline'  => $this->faker->randomDigit(),

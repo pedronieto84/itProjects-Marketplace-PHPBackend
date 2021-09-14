@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'verified' => $this->faker->boolean(),
             'admin' => $this->faker->boolean(),
-            //'project_published' => $this->faker->paragraph(),
+            'project_published' => $this->faker->paragraph(),
             'type_of_institution' => $this->faker->randomElement(['Empresa Pública', 'ONG o empreses del 3er sector', 'Empresa Privada', 'Altres']),
             'remember_token' => Str::random(10),
         ];
