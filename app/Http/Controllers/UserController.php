@@ -67,9 +67,15 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = $request->password;
-            $user->admin = false;
-            $user->projects_published = 0;
+            $user->verified = $request->verified;
+            $user->admin = $request->admin;
+            $user->type_of_institution = $request->type_of_institution;
+            $user->remember_token->$request->remember_token;
+            $user->projects_published = $request->projects_published;
+
             $user->save();
+
+
 
             return response()->json(['user', compact('user')]);
         } catch (Throwable $e) {
@@ -116,6 +122,9 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = $request->password;
+            $user->admin = $request->admin;
+            $user->projects_published = $request->projects_published;
+            $user->project_id = $request->project_id;
 
             $user->save();
 
