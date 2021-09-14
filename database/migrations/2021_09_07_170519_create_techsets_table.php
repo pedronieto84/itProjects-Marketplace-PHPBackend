@@ -15,7 +15,7 @@ class CreateTechsetsTable extends Migration
     {
         Schema::create('techsets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('techset', 60);
+            $table->string('techset');
             $table->timestamps();
         });
     }
