@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Techset;
+use App\Models\File;
 
 class ProjectFactory extends Factory
 {
@@ -22,16 +24,16 @@ class ProjectFactory extends Factory
     public function definition()
     {
         return [
-        'project_id' => $this->faker->name(20),
+        'project_id' => $this->faker->name(),
         'owner_id' => $this->faker->name(),
-        'title' => $this->faker->sentences(),
-        'published_date '  => $this->faker->date() , 
-        'techset_id'  => $this->faker->name(),
-        'files_array_id'  => $this->faker->name(),
-        'deadline'  => $this->faker->numberBetween($min = 100000, $max =1639872000000),
-        'short_explanation'  => $this->faker->sentences(),
+        'title' => $this->faker->name(),
+        'published_date' => $this->faker->date() ,
+        'techset_id'  =>  Techset::inRandomOrder()->value('id'),
+        'files_array_id'  =>  File::inRandomOrder()->value('id'),
+        'deadline'  => $this->faker->randomDigit(),
+        'short_explanation'  => $this->faker->paragraph(),
         'state'  => $this->faker->randomElement(['accepted' , 'published' , 'refused' , 'doing' , 'finished']),
         'bid'  => $this->faker->randomDigit(),
-       ];
+        ];
     }
 }
