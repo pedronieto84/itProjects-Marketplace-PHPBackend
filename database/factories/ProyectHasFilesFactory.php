@@ -2,17 +2,19 @@
 
 namespace Database\Factories;
 
+use App\Models\ProyectHasFiles;
 use App\Models\File;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class FileFactory extends Factory
+class ProyectHasFilesFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = File::class;
+    protected $model = ProyectHasFiles::class;
 
     /**
      * Define the model's default state.
@@ -21,11 +23,11 @@ class FileFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'name' =>$this->faker->colorName,
-            'type_file'  =>  $this->faker->randomElement($array = array ('jpg','png','pdf')) ,
-            'path' =>  '/tmp',
+        return [         
 
+            'file_id' => File::inRandomOrder()->value('id'),
+            'project_id' => Project::inRandomOrder()->value('project_id'),
+            
         ];
     }
 }

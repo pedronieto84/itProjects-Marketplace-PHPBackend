@@ -4,14 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Models\File;
 
-class Project extends Model
+class ProyectHasFiles extends Model
 {
-    use HasFactory;
+    use HasFactory;   
+    
     protected $guarded = [];
-
-    public function File(){
-        return $this->hasMany(File::class);
-    }
 }
