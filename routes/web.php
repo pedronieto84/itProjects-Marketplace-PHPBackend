@@ -25,17 +25,17 @@ Route::get('/', function () {
 Route::get('/cursos/{num}', HomeController::class );
 
 Route::get('/getUsers', [UserController::class,'index']);
-Route::get('/getUser/{userId}', [UserController::class,'show']);
+Route::get('/getUser/{userId?}', [UserController::class,'show']);
 Route::post('/createUser', [UserController::class,'store']);
-Route::post('/deleteUser/{userId}', [UserController::class,'destroy']);
-Route::post('/updateUser/{userId}', [UserController::class,'update']);
+Route::post('/deleteUser/{userId?}', [UserController::class,'destroy']);
+Route::post('/updateUser/{userId?}', [UserController::class,'update']);
 
 Route::get('/getDocuments', [FileController::class,'index']);
 Route::get('/downloadDocument', [FileController::class,'get']);
-Route::get('/getDocument/{fileId}', [FileController::class,'show']);
-Route::post('/uploadDocument/{fileId}', [FileController::class,'store']);
-Route::post('/modifyDocument/{fileId}', [FileController::class,'update']);
-Route::post('/deleteDocument/{fileId}', [FileController::class,'destroy']);
+Route::get('/getDocument/{fileId?}', [FileController::class,'show']);
+Route::post('/uploadDocument/{fileId?}', [FileController::class,'store']);
+Route::post('/modifyDocument/{fileId?}', [FileController::class,'update']);
+Route::post('/deleteDocument/{fileId?}', [FileController::class,'destroy']);
 
 
 Route::get('/getProject', [ProjectController::class,'index']);
