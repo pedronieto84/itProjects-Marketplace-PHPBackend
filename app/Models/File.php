@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class File extends Model
 {
     use HasFactory;
-    protected $guarded = [];
 
-    public function Project(){
-        return $this->hasMany('App\Models\Project');
-    }
+    protected $fillable = [
+        'id',
+        'name',
+        'type_file',
+        'path',
+    ];
 }
