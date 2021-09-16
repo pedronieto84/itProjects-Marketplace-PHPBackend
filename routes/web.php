@@ -38,7 +38,7 @@ Route::post('/modifyDocument/{fileId}', [FileController::class,'update']);
 
 Route::get('/getProject', [ProjectController::class,'index']);
 Route::get('/getProject/{project_id}/{userId?}', [ProjectController::class,'show']);
-Route::get('/createProject', [ProjectController::class,'store']);
-Route::get('/updateProject/{project_id}', [ProjectController::class,'update']);
-Route::get('/deleteProject/{project_id}', [ProjectController::class,'destroy']);
+Route::post('/createProject', [ProjectController::class,'store']);
+Route::post('/updateProject/{project_id}', [ProjectController::class,'update']);
+Route::post('/deleteProject/{project_id}', [ProjectController::class,'destroy']);
 
