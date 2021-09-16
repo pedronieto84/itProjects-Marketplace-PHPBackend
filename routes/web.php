@@ -31,10 +31,12 @@ Route::post('/deleteUser/{userId}', [UserController::class,'destroy']);
 Route::post('/updateUser/{userId}', [UserController::class,'update']);
 
 Route::get('/getDocuments', [FileController::class,'index']);
+Route::get('/downloadDocument', [FileController::class,'get']);
 Route::get('/getDocument/{fileId}', [FileController::class,'show']);
 Route::post('/uploadDocument/{fileId}', [FileController::class,'store']);
-Route::get('/downloadDocument', [FileController::class,'get']);
 Route::post('/modifyDocument/{fileId}', [FileController::class,'update']);
+Route::post('/deleteDocument/{fileId}', [FileController::class,'destroy']);
+
 
 Route::get('/getProject', [ProjectController::class,'index']);
 Route::get('/getProject/{userId?}', [ProjectController::class,'show']);

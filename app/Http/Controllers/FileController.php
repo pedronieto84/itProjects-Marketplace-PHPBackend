@@ -127,6 +127,7 @@ class FileController extends Controller
      */
     public function destroy($fileId)
     {       
+     
         try{
             $file = File::where('id', '=', $fileId)->first(); 
 
