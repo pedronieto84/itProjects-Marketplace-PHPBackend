@@ -11,13 +11,12 @@ class ProjectController extends Controller
 {
     public function index(){
       
-            $users = User::all();
-           
-            foreach($users as $user){
-                return $user->first();
-            } 
+            $project = Project::all();
 
+            return response()->json(['project', $project]);
     }
+
+   
     public function store(Request $request){
 
         try {
@@ -39,18 +38,26 @@ class ProjectController extends Controller
 
             return response()->json(['project', compact('project')]);
 
-    } catch (Throwable $e) {
-               
-        return response()->json(["400"=>"Bad request, data no tiene formato especificado."]);
-     } 
+        } catch (Throwable $e) {
+                
+            return response()->json(["400"=>"Bad request, data no tiene formato especificado."]);
+        } 
+    }
 
+
+    public function show($project_id)
+    {
+        $project = Project::first('project_id');
+
+        return response()->json(['project', $project]);
     }
   
-    public function update(Request $request, $project){
-        
-        try {
 
-            $project->project_id = $request->project_id;
+    public function update(Request $request, $project_id){
+        
+        try{
+
+            $project = Project::where('id', '=', $project_id)->first();
             $project->owner_id = $request->owner_id;
             $project->title = $request->title;
             $project->published_date = $request->published_date;
@@ -61,24 +68,26 @@ class ProjectController extends Controller
             $project->techset_id = $request->techset_id ;
             $project->files_array_id = $request->files_array_id;
 
-            $project->save();
+            return response()->json(['project', compact('project')]);
 
         } catch (Throwable $e) {
-               
-            return response()->json(["400"=>"Bad request, data no tiene formato especificado."]);
-         } 
-
+    
+            return response()->json(["400"=>"Bad request,data no tienen el formato especificado."]);
+        }
     }
-    public function delete($project_id){
+
+    public function destroy($project_id){
+        
         try{
          
-            Project::where('project_id', '=',$project_id)->delete();
+            Project::where('$project_id', '=',$project_id)->delete();
 
             return response()->json("Project ".$project_id." deleted.",200);
 
         } catch (Throwable $e) {
             
-            return response()->json(["404"=>"Resource not found, Aquest projecte no existeix."]);
+            return response()->json(["404"=>"Resource not found, estos datos no tienen el formato especificado."]);
         }
+        
     }
 }

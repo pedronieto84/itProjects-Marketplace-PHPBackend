@@ -39,8 +39,8 @@ Route::post('/deleteDocument/{fileId?}', [FileController::class,'destroy']);
 
 
 Route::get('/getProject', [ProjectController::class,'index']);
-Route::get('/getProject/{userId?}', [ProjectController::class,'show']);
+Route::get('/getProject/{project_id}/{userId?}', [ProjectController::class,'show']);
 Route::post('/createProject', [ProjectController::class,'store']);
-Route::post('/updateProject/{projectId}', [ProjectController::class,'update']);
-Route::post('/deleteProject/{projectId}', [ProjectController::class,'destroy']);
+Route::post('/updateProject/{project_id}', [ProjectController::class,'update']);
+Route::post('/deleteProject/{project_id}', [ProjectController::class,'destroy']);
 
