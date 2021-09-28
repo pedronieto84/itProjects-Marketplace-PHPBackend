@@ -18,8 +18,7 @@ class UserController extends Controller
         
         try{
             $user = User::where('user_id','=',$userId)->first();
-            
-            if ($user) { 
+            if ($user) {                
                 return $user;
             }
             else{
@@ -37,9 +36,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $users = User::all()->toArray();
+        $users = User::all();
 
-        return response()->json(['users', $users]);
+        return response()->json($users);
     }
 
     /**
@@ -70,13 +69,14 @@ class UserController extends Controller
             $user->password = $request->password;
             $user->verified = $request->verified;
             $user->admin = $request->admin;
-            $user->type_of_institution = $request->type_of_institution;
-            $user->remember_token = $request->remember_token;
-            $user->project_published = $request->project_published;
+            $user->type_of_institution = $request->typeOfInstitution;
+            //$user->remember_token = $request->remember_token;
+            //$user->project_published = $request->projectsPublished;
 
             $user->save();
 
-            return response()->json(['user', compact('user')]);
+            return response()->json($user);
+
         } catch (Throwable $e) {
            // report($e);           
            return response()->json(["400"=>"Bad request, data no té format especificat."]);
@@ -89,10 +89,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($userId){
-        $user = $this->checkUser($userId);
-        return response()->json(['user', compact('user')]);
+    public function show(Request $request){
+        $user = $this->checkUser($request->userId);
 
+        return response()->json($user);
     }
 
     /**
@@ -101,10 +101,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($userId){
-        $user = $this->checkUser($userId);
+    public function edit(Request $request){
+        $user = $this->checkUser($request->userId);
 
-        return response()->json(['user', compact('user')]);
+        return response()->json($user);
 
     }
 
@@ -115,26 +115,22 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $userId){
+    public function update(Request $request){
         try {
-            $user = $this->checkUser($userId);
+            $user = $this->checkUser($request->userId);
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = $request->password;
-            $user->verified = $request->verified;
-            $user->admin = $request->admin;
-            $user->type_of_institution = $request->type_of_institution;
-            $user->remember_token = $request->remember_token;
-            $user->project_published = $request->project_published;
+            $user->type_of_institution = $request->typeOfInstitution;
 
             $user->save();
 
-            return response()->json(['user', compact('user')]);
+            return response()->json($user);
 
         } catch (Throwable $e) {
            // report($e);
-    
-            return response()->json(["400"=>"Bad request, data no té format especificat."]);
+           return $e;
+    //        return response()->json(["400"=>"Bad request, data no té format especificat."]);
 
         } 
         
@@ -146,12 +142,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($userId){
+    public function destroy(Request $request){
         try{
-            $user = $this->checkUser($userId);
-            User::where('user_id', '=',$userId)->delete();
+            $user = $this->checkUser($request->userId);
+            User::where('user_id', '=',$request->userId)->delete();
 
-            return response()->json("User ".$userId." deleted.",200);
+            return response()->json("User ".$request->userId." deleted.",200);
 
         } catch (Throwable $e) {
             //report($e);

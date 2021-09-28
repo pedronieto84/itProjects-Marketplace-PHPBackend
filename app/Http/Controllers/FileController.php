@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Auth;
 use Throwable;
 
 class FileController extends Controller
@@ -37,20 +39,36 @@ class FileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+    {   
+        if (Auth::check()){
+            $user_id = Auth::user()->user_id;
+        }else{
+            $user_id = 'anonimous';
+        }
+
+        /*$request->validate([
+            'file' => 'required|mimes:pdf,jpg,npg|max:2048'
+        ]);*/
+
+        
         try {
-            $file = new file();
-            $file->name = $request->name;
-            $file->type_file = $request->type_file;
-            $file->path = $request->path;
-            $file->save();
+            //storage        
+            $fileStorage = $request->file('file')->storeAs('proyectFiles/'.$user_id, $request->name.'.'.$request->type_file);
+            if ($fileStorage){
+                $file = new File;
+                $file->name = $request->name;
+                $file->type_file = $request->type_file;
+                $file->path = 'proyectFiles/'.$user_id.'/';
+                $file->save();
             
-            return response()->json(['file', $file]);
+                return response()->json(['file', $file]);
+            }
         
         } catch (Throwable $e) {
-           // report($e);           
-           return response()->json(["400"=>"Bad request, les dades no ténen el format especificat."]);
+            // report($e);           
+            return response()->json(["400"=>"Bad request, les dades no ténen el format especificat."]);
         }  
+        
     }
 
     /**
@@ -91,7 +109,8 @@ class FileController extends Controller
             $file->type_file = $request->type_file;
             $file->path = $request->path;
             $file->save();
-            return response()->json(['user', compact('user')]);
+
+            return response()->json(['file', $file]);
 
         } catch (Throwable $e) {
            // report($e);
@@ -109,7 +128,12 @@ class FileController extends Controller
      */
     public function destroy($fileId)
     {       
+     
         try{
+            $file = File::where('id', '=', $fileId)->first(); 
+
+            Storage::delete($file->path.'/'.$file->name.'.'.$file->type_file);
+            
             File::where('id', '=', $fileId)->delete(); 
 
             return response()->json("File ".$fileId." deleted.",200);
@@ -123,9 +147,9 @@ class FileController extends Controller
     public function getDownload($fileId)
     {
         $file = File::where('id', '=', $fileId)->firstOrFail();
-        $pathToFile=storage_path().$file->path."/".$file->name."/".$file->type_file;
-
-        return response()->download($pathToFile);  
+        $pathToFile= storage_path().$file->path."/".$file->name."/".$file->type_file;
+        
+        return Storage::download($pathToFile);  
 
     }
 }
