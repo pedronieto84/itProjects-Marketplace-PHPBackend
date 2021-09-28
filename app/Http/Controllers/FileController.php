@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use Illuminate\Http\Request;
+use Throwable;
 
 class FileController extends Controller
 {
@@ -58,7 +59,7 @@ class FileController extends Controller
      * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function show( $fileId)
+    public function show($fileId)
     {
         $file = File::where('id', '=', $fileId)->first();
         return response()->json(['file', $file]);
