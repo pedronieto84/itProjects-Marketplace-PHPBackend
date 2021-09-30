@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TechsetController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -44,3 +45,4 @@ Route::post('/createProject', [ProjectController::class,'store']);
 Route::post('/updateProject/{project_id}', [ProjectController::class,'update']);
 Route::post('/deleteProject/{project_id}', [ProjectController::class,'destroy']);
 
+Route::get('/getTechSet', [TechsetController::class,'getTechSet']);
